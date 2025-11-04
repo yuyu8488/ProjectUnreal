@@ -5,16 +5,21 @@
 
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Components/BoxComponent.h"
 
 AAircraft::AAircraft()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxComponent"));
+	BoxComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	SetRootComponent(BoxComponent);
+
 	BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));
-	SetRootComponent(BodyMesh);
+	BodyMesh->SetupAttachment(BoxComponent);
 	
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
-	SpringArm->SetupAttachment(BodyMesh);
+	SpringArm->SetupAttachment(BoxComponent);
 	SpringArm->SetRelativeLocation(FVector(0.f, 0.f, 40.f));
 	SpringArm->TargetArmLength = 130.f;
 	SpringArm->bUsePawnControlRotation = false;

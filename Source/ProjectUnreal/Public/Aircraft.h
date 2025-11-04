@@ -8,6 +8,7 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class UBoxComponent;
 
 UCLASS()
 class PROJECTUNREAL_API AAircraft : public APawn
@@ -26,6 +27,9 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 protected:
+	UPROPERTY(VisibleDefaultsOnly, Category = "Collision")
+	TObjectPtr<UBoxComponent> BoxComponent = nullptr;
+
 	UPROPERTY(VisibleDefaultsOnly, Category = "Mesh")
 	UStaticMeshComponent* BodyMesh = nullptr;
 
